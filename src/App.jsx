@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import Cards from './components/Cards.jsx';
-import Nav from './components/Nav.jsx';
+import { useState } from "react";
+import Cards from "./components/Cards.jsx";
+import Nav from "./components/Nav.jsx";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -8,16 +8,16 @@ function App() {
     fetch(`https://rickandmortyapi.com/api/character/${character}`)
       .then((res) => res.json())
       .then((newChar) => {
-        if (newChar.name) {
-          setCharacters([...characters, newChar]);
-        } else {
-          window.alert('No existe pj con ese ID');
-        }
+        newChar.name
+          ? setCharacters((characters) => [...characters, newChar])
+          : window.alert("No existe pj con ese ID");
       });
   };
 
-  const onClose = (e) => {
-    const updateCharacters = characters.filter((character) => character.id !== e.target.id);
+  const onClose = (id) => {
+    const updateCharacters = characters.filter(
+      (character) => character.id !== id
+    );
     setCharacters(updateCharacters);
   };
 

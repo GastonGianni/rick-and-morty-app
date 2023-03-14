@@ -1,8 +1,13 @@
 export default function Card(props) {
+  const { onClose } = props;
+  const handleClose = (e) => {
+    onClose(props.id);
+  };
+
   return (
     <div className="text-right border relative rounded-md border-slate-300 shadow-xl bg-gradient-to-r max-w-[300px] max-h-[356px] from-violet-500 to-fuchsia-500">
       <button
-        onClick={props.onClose}
+        onClick={handleClose}
         className="bg-red-500 absolute -translate-x-full opacity-70 hover:opacity-100 cursor-pointer text-white font-bold w-7"
       >
         X
