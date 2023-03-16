@@ -23,9 +23,13 @@ function App() {
     }
   };
 
+  const handleLogOut = () => {
+    setAccess(false);
+  };
+
   useEffect(() => {
     !access && navigate('/');
-  }, [access]);
+  }, [access, navigate]);
 
   const onSearch = (character) => {
     fetch(`https://rickandmortyapi.com/api/character/${character}`)
@@ -42,7 +46,7 @@ function App() {
 
   return (
     <div className={`App h-screen`}>
-      {!isIndexPage && <Nav onSearch={onSearch} />}
+      {!isIndexPage && <Nav onSearch={onSearch} handleLogOut={handleLogOut} />}
 
       <Routes>
         <Route path="/" element={<Form login={login} />}></Route>

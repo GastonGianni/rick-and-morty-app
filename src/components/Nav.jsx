@@ -13,6 +13,9 @@ export default function Nav(props) {
         About
       </Link>
       <SearchBar onSearch={props.onSearch} />
+      <button onClick={props.handleLogOut} className="text-white font-semibold hover:underline pr-4">
+        LogOut
+      </button>
     </div>
   );
 }
