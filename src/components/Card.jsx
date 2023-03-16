@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Card(props) {
   const { onClose } = props;
   const handleClose = (e) => {
@@ -14,7 +16,7 @@ export default function Card(props) {
       </button>
       <img src={props.image} alt="" />
       <h2 className="absolute -translate-y-10 font-bold text-white bg-slate-500 rounded-md opacity-80 hover:opacity-100 cursor-pointer transition-all translate-x-4 p-1">
-        {props.name}
+        <Link to={`/detail/${props.id}`}>{props.name}</Link>
       </h2>
       <div className="flex flex-wrap font-semibold justify-around text-white h-[50px] items-center">
         <h2 className="">Species : {props.species}</h2>
