@@ -49,6 +49,8 @@ function App() {
   const onClose = (id) => {
     const updateCharacters = characters.filter((character) => character.id !== id);
     setCharacters(updateCharacters);
+    const updateSearchedIds = searchedIds.filter((searchedId) => searchedId !== id);
+    setSearchedIds(updateSearchedIds);
   };
 
   return (
