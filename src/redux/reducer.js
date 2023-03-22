@@ -11,8 +11,10 @@ export const reducer = (state = initialState, action) => {
         myFavorites: [...state.myFavorites, action.payload],
       };
     case REMOVE_FAV:
+      const payloadString = action.payload.toString();
       return {
-        myFavorites: [state.myFavorites.filter((personaje, id) => id.toString() !== action.payload)],
+        ...state,
+        myFavorites: state.myFavorites.filter((favorite) => favorite.id.toString() !== payloadString),
       };
     default:
       return state;

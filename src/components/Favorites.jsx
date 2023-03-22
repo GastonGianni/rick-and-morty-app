@@ -1,25 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { removeFav } from '../redux/actions';
 import Card from './Card';
 
 function Favorites(props) {
-  let { myFavorites } = props;
+  const { myFavorites } = props;
+  const onClose = props.removeFav;
 
   return (
-    <div className="flex gap-5 mt-3 items-center justify-center flex-wrap">
-      {myFavorites.map((character) => (
-        <div>
-          <Card
-            id={character.id}
-            key={character.id}
-            name={character.name}
-            species={character.species}
-            gender={character.gender}
-            image={character.image}
-          />
-        </div>
-      ))}
-    </div>
+    <section>
+      <h1 className="text-center text-2xl font-semibold mt-4 text-violet-500">FAVORITES LIST</h1>
+      <div className="flex gap-5 mt-3 items-center justify-center flex-wrap">
+        {myFavorites.map((favorite) => (
+          <div key={favorite.id}>
+            <Card {...favorite} onClose={onClose} />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -29,4 +27,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Favorites);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeFav: (id) => dispatch(removeFav(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

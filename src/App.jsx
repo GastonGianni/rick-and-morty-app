@@ -9,13 +9,14 @@ import Nav from './components/Nav.jsx';
 
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [access, setAccess] = useState(false);
+  const [searchedIds, setSearchedIds] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const isIndexPage = location.pathname === '/';
-  const [access, setAccess] = useState(false);
 
-  const EMAIL = 'gianni.gaston@hotmail.com';
-  const PASSWORD = 'a123456789';
+  const EMAIL = '';
+  const PASSWORD = '';
 
   const login = (userData) => {
     if (userData.password === PASSWORD && userData.email === EMAIL) {
@@ -36,7 +37,12 @@ function App() {
     fetch(`https://rickandmortyapi.com/api/character/${character}`)
       .then((res) => res.json())
       .then((newChar) => {
-        newChar.name ? setCharacters((characters) => [...characters, newChar]) : window.alert('No existe pj con ese ID');
+        if (newChar.name) {
+          if (!searchedIds.includes(newChar.id)) {
+            setCharacters((characters) => [...characters, newChar]);
+            setSearchedIds((searchedIds) => [...searchedIds, newChar.id]);
+          } else window.alert('Ya se ha agregado este personaje');
+        } else window.alert('No existe personaje con ese ID');
       });
   };
 
@@ -48,7 +54,6 @@ function App() {
   return (
     <div className={`App h-screen`}>
       {!isIndexPage && <Nav onSearch={onSearch} handleLogOut={handleLogOut} />}
-
       <Routes>
         <Route path="/" element={<Form login={login} />}></Route>
         <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
