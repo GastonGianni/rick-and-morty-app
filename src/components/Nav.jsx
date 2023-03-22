@@ -9,6 +9,9 @@ export default function Nav(props) {
       <Link to="/home" className="text-white font-semibold hover:underline">
         Home
       </Link>
+      <Link to="/favorites" className="text-white font-semibold hover:underline">
+        Favorites
+      </Link>
       <Link to="/about" className="text-white font-semibold mr-auto hover:underline">
         About
       </Link>

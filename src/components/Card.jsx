@@ -1,9 +1,28 @@
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addFav, removeFav } from '../redux/actions';
 
-export default function Card(props) {
+function Card(props) {
+  const [isFav, setIsFav] = useState(false);
+  const { myFavorites } = props;
   const { onClose } = props;
-  const handleClose = (e) => {
+
+  useEffect(() => {
+    myFavorites.forEach((fav) => {
+      if (fav.id === props.id) {
+        setIsFav(true);
+      }
+    });
+  }, [myFavorites, props.id]);
+
+  const handleClose = () => {
     onClose(props.id);
+  };
+
+  const handleFavorite = () => {
+    setIsFav(!isFav);
+    isFav ? props.removeFav(props.id) : props.addFav(props);
   };
 
   return (
@@ -13,7 +32,16 @@ export default function Card(props) {
         className="bg-red-500 absolute -translate-x-full opacity-70 hover:opacity-100 cursor-pointer text-white font-bold w-7"
       >
         X
-      </button>
+      </button>{' '}
+      {isFav ? (
+        <button onClick={handleFavorite} className="scale-125 transition-all absolute left-1 opacity-70 hover:opacity-100 cursor-pointer ">
+          ❤️
+        </button>
+      ) : (
+        <button onClick={handleFavorite} className="transition-all absolute left-1 opacity-70 hover:opacity-100 cursor-pointer ">
+          🤍
+        </button>
+      )}
       <img src={props.image} alt="" />
       <h2 className="absolute -translate-y-10 font-bold text-white bg-slate-500 rounded-md opacity-80 hover:opacity-100 cursor-pointer transition-all translate-x-4 p-1">
         <Link to={`/detail/${props.id}`}>{props.name}</Link>
@@ -25,3 +53,21 @@ export default function Card(props) {
     </div>
   );
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFav: (personaje) => {
+      dispatch(addFav(personaje));
+    },
+    removeFav: (id) => {
+      dispatch(removeFav(id));
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    myFavorites: state.myFavorites,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
