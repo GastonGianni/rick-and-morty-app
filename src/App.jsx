@@ -56,13 +56,15 @@ function App() {
   return (
     <div className={`App h-screen`}>
       {!isIndexPage && <Nav onSearch={onSearch} handleLogOut={handleLogOut} />}
-      <Routes>
-        <Route path="/" element={<Form login={login} />}></Route>
-        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/detail/:id" element={<Detail />} />
-      </Routes>
+      <div className="max-w-[1200px] mx-auto">
+        <Routes>
+          <Route path="/" element={<Form login={login} />}></Route>
+          <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/detail/:id" element={<Detail />} />
+        </Routes>
+      </div>
     </div>
   );
 }
